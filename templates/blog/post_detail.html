@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<h1>{{ post.title }}</h1>
+<p>{{ post.published_at|date:"F j, Y" }} — by {{ post.author }} — {{ post.category }}</p>
+{% if post.featured_image %}
+    <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" style="max-width: 500px;">
+{% endif %}
+<div>{{ post.content|linebreaks }}</div>
+{% endblock %}

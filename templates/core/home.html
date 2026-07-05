@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Hi, I'm Your Name</h1>
+<p>I build things with Python and Django.</p>
+
+<h2>Featured Projects</h2>
+{% for project in featured_projects %}
+    <div>
+        <h3><a href="{% url 'project_detail' project.slug %}">{{ project.title }}</a></h3>
+        <p>{{ project.description|truncatewords:20 }}</p>
+    </div>
+{% empty %}
+    <p>No featured projects yet.</p>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog{% endblock %}
+
+{% block content %}
+<h1>Blog</h1>
+{% for post in posts %}
+    <div>
+        <h3><a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a></h3>
+        <p>{{ post.published_at|date:"F j, Y" }} — {{ post.category }}</p>
+        <p>{{ post.content|truncatewords:30 }}</p>
+    </div>
+{% empty %}
+    <p>No posts yet.</p>
+{% endfor %}
+
+{% if posts.has_other_pages %}
+<div>
+    {% if posts.has_previous %}
+        <a href="?page={{ posts.previous_page_number }}">Previous</a>
+    {% endif %}
+    <span>Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
+    {% if posts.has_next %}
+        <a href="?page={{ posts.next_page_number }}">Next</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}
