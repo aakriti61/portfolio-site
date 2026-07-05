@@ -5,24 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Portfolio{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <nav>
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'about' %}">About</a>
-        <a href="{% url 'project_list' %}">Projects</a>
-        <a href="{% url 'post_list' %}">Blog</a>
-        <a href="{% url 'contact' %}">Contact</a>
-    </nav>
+    <header class="site-header">
+        <a href="{% url 'home' %}" class="logo">Your Name</a>
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'project_list' %}">Projects</a>
+            <a href="{% url 'post_list' %}">Blog</a>
+            <a href="{% url 'contact' %}" class="nav-cta">Contact</a>
+        </nav>
+    </header>
 
-    <main>
+    <main class="site-main">
         {% block content %}
         {% endblock %}
     </main>
 
-    <footer>
-        <p>&copy; 2026 Your Name</p>
+    <footer class="site-footer">
+        <p>&copy; 2026 Your Name — built with Django</p>
     </footer>
 </body>
 </html>
