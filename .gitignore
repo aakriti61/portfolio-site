@@ -6,3 +6,8 @@ db.sqlite3
 media/
 *.log
 staticfiles/
+
+# React/Vite frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
