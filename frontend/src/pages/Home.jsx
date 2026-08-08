@@ -23,7 +23,7 @@ function Home() {
 
     return (
         <>
-            <h1>Hi, I'm Your Name</h1>
+            <h1>Hi, I'm Aakriti</h1>
             <p>I build things with Python and Django.</p>
 
             <h2>Featured Projects</h2>
