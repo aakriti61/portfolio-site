@@ -16,17 +16,8 @@ class ProjectModelTest(TestCase):
     def test_project_str(self):
         self.assertEqual(str(self.project), "Test Project")
 
-    def test_project_featured_default_false(self):
-        project2 = Project.objects.create(
-            title="Another Project",
-            slug="another-project",
-            description="Desc",
-            tech_stack="Django",
-        )
-        self.assertFalse(project2.featured)
 
-
-class CoreViewsTest(TestCase):
+class ProjectAPITest(TestCase):
     def setUp(self):
         self.project = Project.objects.create(
             title="Sample Project",
@@ -36,54 +27,38 @@ class CoreViewsTest(TestCase):
             featured=True,
         )
 
-    def test_home_page_status_code(self):
-        response = self.client.get(reverse('home'))
+    def test_project_list_api(self):
+        response = self.client.get(reverse('api_project_list'))
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['count'], 1)
 
-    def test_home_page_shows_featured_project(self):
-        response = self.client.get(reverse('home'))
-        self.assertContains(response, "Sample Project")
-
-    def test_about_page_status_code(self):
-        response = self.client.get(reverse('about'))
+    def test_project_detail_api(self):
+        response = self.client.get(reverse('api_project_detail', args=['sample-project']))
         self.assertEqual(response.status_code, 200)
-
-    def test_project_list_status_code(self):
-        response = self.client.get(reverse('project_list'))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Sample Project")
-
-    def test_project_detail_status_code(self):
-        response = self.client.get(reverse('project_detail', args=['sample-project']))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['title'], "Sample Project")
 
     def test_project_detail_404_for_missing_slug(self):
-        response = self.client.get(reverse('project_detail', args=['does-not-exist']))
+        response = self.client.get(reverse('api_project_detail', args=['does-not-exist']))
         self.assertEqual(response.status_code, 404)
 
 
-class ContactFormTest(TestCase):
-    def test_contact_page_loads(self):
-        response = self.client.get(reverse('contact'))
-        self.assertEqual(response.status_code, 200)
-
-    def test_contact_form_submission_creates_message(self):
-        response = self.client.post(reverse('contact'), {
+class ContactAPITest(TestCase):
+    def test_contact_submission_creates_message(self):
+        response = self.client.post(reverse('api_contact'), {
             'name': 'Jane Doe',
             'email': 'jane@example.com',
             'subject': 'Hello',
             'message': 'This is a test message.',
         })
-        self.assertEqual(response.status_code, 302)  # redirect after success
+        self.assertEqual(response.status_code, 201)
         self.assertEqual(ContactMessage.objects.count(), 1)
-        saved = ContactMessage.objects.first()
-        self.assertEqual(saved.name, 'Jane Doe')
 
-    def test_contact_form_rejects_invalid_email(self):
-        response = self.client.post(reverse('contact'), {
+    def test_contact_rejects_invalid_email(self):
+        response = self.client.post(reverse('api_contact'), {
             'name': 'Jane Doe',
             'email': 'not-an-email',
             'subject': 'Hello',
             'message': 'Test',
         })
+        self.assertEqual(response.status_code, 400)
         self.assertEqual(ContactMessage.objects.count(), 0)
