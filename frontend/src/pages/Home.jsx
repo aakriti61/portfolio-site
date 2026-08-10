@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { GithubIcon, LinkedinIcon, MailIcon } from '../components/Icons';
 import { getProjects } from '../api/portfolio';
+import { getPlaceholderStyle } from '../utils/placeholder';
 
 function Home() {
     const [featuredProjects, setFeaturedProjects] = useState([]);
@@ -23,8 +25,27 @@ function Home() {
 
     return (
         <>
-            <h1>Hi, I'm Aakriti</h1>
-            <p>I build things with Python and Django.</p>
+             <div className="hero-split">
+                <div className="hero-left">
+                    <p className="hero-eyebrow">Hi, I am</p>
+                    <h1 className="hero-name">Aakriti</h1>
+                    <p className="hero-title">Python &amp; Django Developer</p>
+                    <div className="hero-socials">
+                        <a href="mailto:aakriti206105@gmail.com" className="social-circle" aria-label="Email">
+                        <MailIcon />
+                        </a>
+                        <a href="https://github.com/aakriti61" target="_blank" rel="noreferrer" className="social-circle" aria-label="GitHub">
+                        <GithubIcon />
+                        </a>
+                        <a href="https://linkedin.com/in/aakriti-simkhada" target="_blank" rel="noreferrer" className="social-circle" aria-label="LinkedIn">
+                        <LinkedinIcon />
+                        </a>
+                    </div>
+                </div>
+                <div className="hero-right">
+                    <div className="hero-avatar-circle">YN</div>
+                </div>
+            </div>
 
             <h2>Featured Projects</h2>
             {loading && <p>Loading...</p>}
@@ -33,9 +54,18 @@ function Home() {
                 <p>No featured projects yet.</p>
             )}
             {featuredProjects.map((project) => (
-                <div className="card" key={project.id}>
-                    <h3><Link to={`/projects/${project.slug}`}>{project.title}</Link></h3>
-                    <p>{project.description.slice(0, 120)}...</p>
+                <div className="card card-with-image" key={project.id}>
+                    {project.image ? (
+                        <img src={project.image} alt={project.title} className="card-thumb" />
+                    ) : (
+                        <div className="card-thumb-placeholder" style={getPlaceholderStyle(project.title)}>
+                            {project.title.charAt(0)}
+                        </div>
+                    )}
+                    <div className="card-body">
+                        <h3><Link to={`/projects/${project.slug}`}>{project.title}</Link></h3>
+                        <p>{project.description.slice(0, 120)}...</p>
+                    </div>
                 </div>
             ))}
         </>
