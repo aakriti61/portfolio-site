@@ -1,3 +1,5 @@
+import myPhoto from '../assets/me.jpg';
+
 const skillGroups = [
     {
         category: 'Backend',
@@ -20,7 +22,7 @@ function About() {
     return (
         <>
             <div className="about-header">
-                <div className="avatar-small">YN</div>
+                <img src={myPhoto} alt="Your Name" className="avatar-small" />
                 <div className="about-bio">
                     <h1>About Me</h1>
                     <p>

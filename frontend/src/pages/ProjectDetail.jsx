@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getProject } from '../api/portfolio';
+import FormattedText from '../components/FormattedText';
 
 function ProjectDetail() {
     const { slug } = useParams();
@@ -28,7 +29,7 @@ function ProjectDetail() {
         <>
             <h1>{project.title}</h1>
             {project.image && <img src={project.image} alt={project.title} style={{ maxWidth: '400px' }} />}
-            <p>{project.description}</p>
+            <FormattedText text={project.description} />
             <p><strong>Tech stack:</strong> {project.tech_stack}</p>
             {project.github_link && <p><a href={project.github_link} target="_blank" rel="noreferrer">GitHub</a></p>}
             {project.live_link && <p><a href={project.live_link} target="_blank" rel="noreferrer">Live Site</a></p>}

@@ -91,6 +91,18 @@ a:hover { text-decoration: underline; }
     font-size: 0.9rem;
 }
 
+.feature-list {
+    margin: 0.8rem 0 1.2rem 1.4rem;
+    padding: 0;
+}
+.feature-list li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+.feature-list li::marker {
+    color: var(--indigo);
+}
+
 .card {
     background: var(--card-bg);
     border: 1px solid var(--border);
@@ -98,16 +110,43 @@ a:hover { text-decoration: underline; }
     border-radius: 10px;
     padding: 1.2rem 1.5rem;
     margin-bottom: 1.2rem;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-left-width 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+.card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent, rgba(108, 92, 231, 0.04), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+    pointer-events: none;
+}
+.card:hover::after {
+    transform: translateX(100%);
 }
 .card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(27, 16, 48, 0.08);
+    transform: translateY(-4px) scale(1.005);
+    box-shadow: 0 14px 30px rgba(27, 16, 48, 0.1);
+    border-left-width: 8px;
 }
 .card:nth-of-type(4n+1) { border-left-color: var(--indigo); }
 .card:nth-of-type(4n+2) { border-left-color: var(--coral); }
 .card:nth-of-type(4n+3) { border-left-color: var(--teal); }
 .card:nth-of-type(4n+4) { border-left-color: var(--marigold); }
+
+.card h3 a {
+    transition: color 0.15s ease;
+}
+
+.card-thumb {
+    transition: transform 0.3s ease;
+}
+.card:hover .card-thumb,
+.card:hover .card-thumb-placeholder {
+    transform: scale(1.03);
+}
 
 .meta {
     font-size: 0.85rem;
@@ -125,6 +164,15 @@ a:hover { text-decoration: underline; }
     color: var(--indigo);
     border: 1px solid var(--border);
     margin-right: 0.3rem;
+}
+
+.tag, .skill-pill {
+    transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+.tag:hover, .skill-pill:hover {
+    background: var(--indigo);
+    color: white;
+    transform: translateY(-1px);
 }
 
 .filter-bar {
@@ -161,7 +209,7 @@ button, .btn {
     transition: background 0.15s ease;
 }
 button:hover, .btn:hover {
-    background: #5b4bd6;
+    background: #6e5ba1;
 }
 
 form p { margin-bottom: 1rem; }
@@ -208,7 +256,7 @@ img {
     h1 { font-size: 1.9rem; }
 }
 
-/* Hero section */
+/* Hero section (home page intro block, non-split version used elsewhere) */
 .hero {
     display: flex;
     align-items: center;
@@ -293,6 +341,7 @@ img {
     .card-with-image { flex-direction: column; }
     .card-thumb, .card-thumb-placeholder { width: 100%; height: 160px; }
 }
+
 /* Diagonal split hero */
 .hero-split {
     display: flex;
@@ -318,8 +367,28 @@ img {
     margin-left: -18%;
     background: linear-gradient(135deg, var(--indigo), var(--ink) 130%);
     display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+.hero-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+}
+.hero-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
     align-items: center;
     justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 5rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.85);
 }
 .hero-eyebrow {
     text-transform: uppercase;
@@ -360,19 +429,8 @@ img {
     transform: translateY(-2px);
     text-decoration: none;
 }
-.hero-avatar-circle {
-    width: 220px;
-    height: 220px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Fraunces', serif;
-    font-size: 4.5rem;
-    font-weight: 700;
-    color: white;
-    background: linear-gradient(135deg, var(--coral), var(--marigold));
-    border: 6px solid rgba(255,255,255,0.15);
+
+.avatar-small {
     object-fit: cover;
 }
 
@@ -384,9 +442,8 @@ img {
         text-align: center;
         align-items: center;
     }
-    .hero-right { margin-left: 0; padding: 2.5rem; }
+    .hero-right { margin-left: 0; padding: 0; height: 320px; }
     .hero-name { font-size: 2.2rem; }
-    .hero-avatar-circle { width: 160px; height: 160px; font-size: 3rem; }
 }
 
 /* About page */

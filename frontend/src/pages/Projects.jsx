@@ -9,15 +9,14 @@ function Projects() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        getProjects()
-            .then((response) => {
-                setProjects(response.data.results);
+        
+            getProjects()
+                .then((response) => {
+                const sorted = [...response.data.results].sort((a, b) =>
+                a.title.localeCompare(b.title)
+            );
+                setProjects(sorted);
                 setLoading(false);
-            })
-            .catch((err) => {
-                setError('Could not load projects.');
-                setLoading(false);
-                console.error(err);
             });
     }, []);
 

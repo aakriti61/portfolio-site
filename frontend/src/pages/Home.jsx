@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { GithubIcon, LinkedinIcon, MailIcon } from '../components/Icons';
 import { getProjects } from '../api/portfolio';
 import { getPlaceholderStyle } from '../utils/placeholder';
+import myPhoto from '../assets/me.jpg';
 
 function Home() {
     const [featuredProjects, setFeaturedProjects] = useState([]);
@@ -43,7 +44,7 @@ function Home() {
                     </div>
                 </div>
                 <div className="hero-right">
-                    <div className="hero-avatar-circle">YN</div>
+                    <img src={myPhoto} alt="Aakriti" className="hero-photo" />
                 </div>
             </div>
 
